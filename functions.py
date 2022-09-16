@@ -14,4 +14,11 @@ def search_posts(search_key:str):
     return posts_list
 
 
-print(search_posts("пока все на работе"))
+def add_post(picture, content):
+    all_posts = load_json()
+    a = {"pic": picture, "content": content}
+    all_posts.append(a)
+    with open(PATH, "w", encoding="utf-8") as file:
+        json.dump(all_posts, file, ensure_ascii=False)
+
+
