@@ -5,10 +5,10 @@ main_blueprint = Blueprint("main_blueprint", __name__, template_folder="template
 
 @main_blueprint.route("/")
 def main_page():
-    return render_template("index.html")
+    return render_template("templates/index.html")
 
 @main_blueprint.route("/search/")
 def page_tag():
     data = request.args.get("s")
     posts = search_posts(data)
-    return render_template("post_list.html", posts=posts, data=data)
+    return render_template("templates/post_list.html", posts=posts, data=data)
