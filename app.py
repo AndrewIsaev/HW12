@@ -1,12 +1,15 @@
 from flask import Flask, request, render_template, send_from_directory
-# from functions import ...
+from main.views import main_blueprint
+from loader.views import loader_blueprint
+from functions import load_json, search_posts
 
 POST_PATH = "posts.json"
 UPLOAD_FOLDER = "uploads/images"
 
 app = Flask(__name__)
 
-
+app.register_blueprint(main_blueprint)
+app.register_blueprint(loader_blueprint)
 @app.route("/")
 def page_index():
     pass
@@ -14,7 +17,9 @@ def page_index():
 
 @app.route("/list")
 def page_tag():
-    pass
+    data = request.args.get("s")
+    posts = search_posts(data)
+    return render_template("post_list.html", posts=posts, data=data)
 
 
 @app.route("/post", methods=["GET", "POST"])
@@ -32,5 +37,5 @@ def static_dir(path):
     return send_from_directory("uploads", path)
 
 
-app.run()
+app.run(debug=True)
 
